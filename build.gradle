@@ -1,0 +1,68 @@
+
+// pour lancer les tests : ./gradlew cleanTest test
+// pour lancer la suite de test définie : ./gradlew cleanTest test --tests tddnew.AllTests
+
+// pour data providers -> JUnit 4 + package en plus ou TestNG ou JUnit 5
+
+plugins {
+    // application Java
+    id 'application'
+
+    // couverture
+    id 'jacoco'
+
+    // améliorations sorties des tests avec gradle
+    id "com.adarshr.test-logger" version "3.0.0"
+
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+    //  testImplementation 'com.tngtech.java:junit-dataprovider:1.13.1'
+
+    implementation 'com.google.guava:guava:30.1.1-jre'
+}
+
+application {
+    mainClass = 'tddnew.App'
+}
+
+jacoco {
+    toolVersion = '0.8.7'
+    reportsDir = file("${buildDir}/reports/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        html.destination = file("${buildDir}/jacocoHtml")
+    }
+}
+
+testlogger {
+    theme 'mocha'
+    showExceptions true
+    showStackTraces true
+    showFullStackTraces false
+    showCauses true
+    slowThreshold 2000
+    showSummary true
+    showSimpleNames false
+    showPassed true
+    showSkipped true
+    showFailed true
+    showStandardStreams false
+    showPassedStandardStreams true
+    showSkippedStandardStreams true
+    showFailedStandardStreams true
+    logLevel 'lifecycle'
+}
+
